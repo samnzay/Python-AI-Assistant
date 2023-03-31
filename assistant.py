@@ -58,7 +58,7 @@ def main():
                     #transcript audio to test 
                     text=transcribe_audio_to_test(filename)
                     if text:
-                        print(f"yuo said {text}")
+                        print(f"you said {text}")
                         
                         #Generate the response
                         response = generate_response(text)
