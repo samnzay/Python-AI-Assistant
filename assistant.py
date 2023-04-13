@@ -1,12 +1,12 @@
 import openai
-
+import os
 import speech_recognition as sr
 import pyttsx3
 import time 
 
 
 # Initialize OpenAI API
-openai.api_key = "your key in open AI APi"
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 # Initialize the text to speech engine 
 engine=pyttsx3.init()
 
