@@ -6,7 +6,7 @@ import time
 
 
 # Initialize OpenAI API
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+openai.api_key = os.environ.get('OPENAI_API_KEY')
 # Initialize the text to speech engine 
 engine=pyttsx3.init()
 
@@ -21,7 +21,7 @@ def transcribe_audio_to_test(filename):
         print("skipping unkown error")
 
 def generate_response(prompt):
-    response= openai.completion.create(
+    response= openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
         max_tokens=4000,
@@ -47,8 +47,9 @@ def main():
                     #record audio
                     filename ="input.wav"
                     print("Say your question")
+                    speak_text(f"yes please, how can i help you?")
                     with sr.Microphone() as source:
-                        recognizer=sr.recognize()
+                        recognizer=sr.Recognizer()
                         source.pause_threshold=1
                         audio=recognizer.listen(source,phrase_time_limit=None,timeout=None)
                         with open(filename,"wb")as f:
@@ -59,6 +60,7 @@ def main():
                     text=transcribe_audio_to_test(filename)
                     if text:
                         print(f"you said {text}")
+                        speak_text(f"you said {text}")
                         
                         #Generate the response
                         response = generate_response(text)
@@ -69,5 +71,7 @@ def main():
             except Exception as e:
                 
                 print("An error ocurred : {}".format(e))
+                speak_text("Something Went Wrong! {}".format(e))
+                
 if __name__=="__main__":
     main()
